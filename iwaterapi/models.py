@@ -61,12 +61,34 @@ class IwaterAuthApp(models.Model):
     def __str__(self):
         return self.client_id
 
+class IwaterUsers(models.Model):
+    login = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    salt = models.CharField(max_length=255)
+    session = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=15)
+    role = models.IntegerField()
+    company_id = models.CharField(max_length=4)
+    ban = models.IntegerField()
+    region = models.CharField(max_length=255, blank=True, null=True)
+    card = models.CharField(max_length=32, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    email = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'iwater_users'
+
+    def __str__(self):
+        return self.name
 
 class IwaterCategory(models.Model):
     category_id = models.AutoField(primary_key=True)
     category = models.CharField(max_length=32)
     company_id = models.CharField(max_length=4)
     priority = models.IntegerField()
+    # user_id = models.ForeignKey(IwaterUsers,related_name="users",on_delete=models.CASCADE())
 
     class Meta:
         managed = False
@@ -625,27 +647,6 @@ class IwaterUnitsAgrSwap(models.Model):
         return self.name
 
 
-class IwaterUsers(models.Model):
-    login = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    salt = models.CharField(max_length=255)
-    session = models.CharField(max_length=255, blank=True, null=True)
-    name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=15)
-    role = models.IntegerField()
-    company_id = models.CharField(max_length=4)
-    ban = models.IntegerField()
-    region = models.CharField(max_length=255, blank=True, null=True)
-    card = models.CharField(max_length=32, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'iwater_users'
-
-    def __str__(self):
-        return self.name
 
 
 class IwaterUsersApp(models.Model):
